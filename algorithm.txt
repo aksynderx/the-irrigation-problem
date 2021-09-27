@@ -1,0 +1,37 @@
+what we know:
+1. each nozzle sprays water with a 25ft radius with a uniform flow rate
+2. we have 20 nozzles
+
+factors to play around with:
+1. distance between circle centers 
+2. number of nozzles used
+
+mathings:
+1. the total amount of water each plant will get is the length of the chord that contains the plant. for example, if a plant's x coordinate was the same as the x coordinate for the center of a nozzle, the amount of water it gets could be related to the length of the chord that it creates as it passes through the circle. so, it would get 50ft of water because its only getting water from one nozzle and is passing through the diameter of the nozzle's spray.
+2. the total amount of water that each plant will get is equivalent to the sum of the lengths of the each chord the plant creates as it passes through.
+  ex. if a plant crossed through the middle of the intersection of the spray zone of two nozzles, and the both chords measure 12.5ft, the amount of water you would get be 25ft of water. 
+3. the goal is to optimize the distance between the two circle centers to minimize the range of waters. so, if a certain arrangement had a plant that got 20ft of water and another that got 50ft of water, it would be bad. the best possible scenario would be that the range is minimized. 
+
+limitations:
+- the maximum overlap is 25 feet as we are not taking into account the overlap of three nozzles. 
+
+variable documentation:
+spray_radius = 25ft
+  - the radius of the circular spray of each circle is 25ft
+step_size
+  - the interval over which we are obtaining data
+nozzle_separation
+  - the distance between the two spray nozzles (0 <= nozzle_separation <= 25)
+left_chord = sqrt(spray_radius^2-(x)^2)
+  - the length of the chord on the left circle 
+right_chord = sqrt(spray_radius^2-(x-nozzle_separation)^2)
+  - the length of the chord on the right circle
+
+algorithm for amount_of_water():
+1. calculate the x coordinate where left_chord > 0 and right_chord is equal to 0. this will provide the left bound of overlap of the left and right sprays, as wherever left_chord > 0 and right_chord = 0 will be the leftmost edge of the overlap
+2. calculate the x coordinate where right_chord > 0 and left_chord is equal to 0. this will provide the right bound of the overlap of the left and right sprays, as wherever right_chord > 0 and left_chord = 0 will be the rightmost edge of the overlap
+3. return the amount of water each x coordinate gets with the fomrula left_chord + right_chord. use the values from 1 and 2 to define the start and stop points for the range function. use step size for the range to define the interval over which you are calculating data. add each result to a list.
+4. calculate the range by calculating the maximum value in the list from 3 and the minimum value of the list from 3 and use the formula max - min. return this value and end the function. 
+
+algorithm for optimize():
+1. over a range that we define, we return the output of amount_of_water() to a list and the specific nozzle_separation to another list for each iteration. we can then calculate the minimum value of the index containing the ranges and then find the index of that value, and then index its nozzle_separation. that will be the most optimal nozzle_separation as we defined.
