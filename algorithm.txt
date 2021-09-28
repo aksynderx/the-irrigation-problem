@@ -27,7 +27,7 @@ left_chord = sqrt(spray_radius^2-(x)^2)
 right_chord = sqrt(spray_radius^2-(x-nozzle_separation)^2)
   - the length of the chord on the right circle
 
-algorithm for amount_of_water():
+algorithm for water_range():
 1. calculate the x coordinate where left_chord > 0 and right_chord is equal to 0. this will provide the left bound of overlap of the left and right sprays, as wherever left_chord > 0 and right_chord = 0 will be the leftmost edge of the overlap
 2. calculate the x coordinate where right_chord > 0 and left_chord is equal to 0. this will provide the right bound of the overlap of the left and right sprays, as wherever right_chord > 0 and left_chord = 0 will be the rightmost edge of the overlap
 3. return the amount of water each x coordinate gets with the fomrula left_chord + right_chord. use the values from 1 and 2 to define the start and stop points for the range function. use step size for the range to define the interval over which you are calculating data. add each result to a list.

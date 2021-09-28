@@ -1,17 +1,30 @@
-import math
+import numpy
 
-# def amount_of_water(spray_radius, step_size, x, separation) :
-#   # domain = [0, nozzle_separation]  
-#   def chord(x, separation): 
-#     math.sqrt(spray_radius**2 - (x - separation)^2)
+# will return the length of the coord
+def chord(xcoord, spray_radius, nozzle_separation):
+  return 2 * (numpy.sqrt(spray_radius**2 - (xcoord - nozzle_separation)**2))
 
-#   water = chord(x, )
-#   return  
+def water_range(nozzle_separation, spray_radius):
+  xi = 0.0
+  xf = nozzle_separation
+  spray_radius = spray_radius
+  water = list()
+  for x in numpy.arange(xi, xf, 0.01):
+    left_chord = chord(x, spray_radius, 0)
+    right_chord = chord(x, spray_radius, nozzle_separation)
+    if left_chord + right_chord >= 0:
+      water.append(left_chord + right_chord)
+  maxmin = max(water) - min(water)
+  return maxmin
 
+def optimize(max_nozzle_separation, spray_radius):
+  xi = 0
+  xf = max_nozzle_separation
+  ranges = list()
+  nozzle_separation_value = list()
+  for x in numpy.arange(xi, xf, 0.01):
+    ranges.append(water_range(x, spray_radius))
+  return nozzle_separation_value[ranges.index(min(ranges))]
 
+optimize(25, 25)
 
-def chord(x, nozzle_separation, spray_radius):
-  return 2*(math.sqrt(spray_radius**2 - (x - nozzle_separation)^2))
-
-print(chord(0, 0, 25))
-print(chord(25, 0, 25))
