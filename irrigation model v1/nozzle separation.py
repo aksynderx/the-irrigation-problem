@@ -16,21 +16,29 @@ def water_range(nozzle_separation, spray_radius):
       water.append(left_chord + right_chord)
   # print(water)
   maxmin = max(water) - min(water)
-  return maxmin
+  return [maxmin, max(water), min(water)]
 
 def optimize(max_nozzle_separation, spray_radius):
   xi = 25
   xf = max_nozzle_separation
   ranges = []
   nozzle_separation_value = []
-  for x in numpy.arange(xi + 0.01, xf, 0.01):
+  maximum = []
+  minimum = []
+  for x in numpy.arange(xi, xf, 0.1):
     # print(x)
     nozzle_separation_value.append(x)
-    ranges.append(water_range(x, spray_radius))
-  print(max(ranges))
-  print(ranges.index(max(ranges)))
-  print(x[ranges.index(max(ranges))])
+    ranges.append(water_range(x, spray_radius)[0])
+    maximum.append(water_range(x, spray_radius)[1])
+    minimum.append(water_range(x, spray_radius)[2])
+  print(min(ranges))
+  print(ranges.index(min(ranges)))
+  print(nozzle_separation_value[ranges.index(min(ranges))])
+  print(maximum[ranges.index(min(ranges))])
+  print(minimum[ranges.index(min(ranges))])
   # return nozzle_separation_value[ranges.index(min(ranges))]
+
+# def optimize(min_nozzle_separation, max_nozzle_separation, )
 
 def main():
   optimize(50, 25)

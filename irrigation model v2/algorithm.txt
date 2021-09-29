@@ -1,0 +1,2 @@
+in this iteration of the irrigation problem, i will be modeling the water spray differently. 
+i will be modeling the entire 400 feet of pipe, holding that as constant.
